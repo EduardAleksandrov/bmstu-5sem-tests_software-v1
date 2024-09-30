@@ -44,12 +44,18 @@ endif()
 include(${PROJECT_SOURCE_DIR}/build-conan/build/Release/generators/conan_toolchain.cmake)
 find_package(Boost REQUIRED)
 
+# Find GTest and GMock
+find_package(GTest REQUIRED)
+# find_package(GMock REQUIRED)
+# include_directories(${GTEST_INCLUDE_DIRS} ${GMOCK_INCLUDE_DIRS})
+include_directories(${GTEST_INCLUDE_DIRS})
+
 # Include directories
 include_directories(include)
 
 # Add the main source files
-# add_library(my_code src/my_code.cpp)
+add_library(one src/1.integral.cpp)
 
 add_executable(1.test 1.test.cpp)
-target_link_libraries(1.test boost::boost)
+target_link_libraries(1.test boost::boost GTest::GTest GTest::Main one )
 # target_link_libraries(1.test boost::boost my_code) 
