@@ -5,6 +5,7 @@
 
 #include "./include/1.integral_v1.h"
 #include "./include/1.integral_v2.h"
+#include "./include/1.factory.h"
 
 BOOST_AUTO_TEST_SUITE(TestSuite_integral)
 
@@ -74,6 +75,42 @@ BOOST_AUTO_TEST_CASE(test_case_4_integral_mock)
     BOOST_TEST(f2 == 2.67, boost::test_tools::tolerance(1e-2)); // "(Метод правых прямоугольников): Площадь равна: "
     BOOST_TEST(f3 == 2.67, boost::test_tools::tolerance(1e-2)); // "(Метод трапеций): Площадь равна: "
     std::cout << "test4" << std::endl;
+}
+
+BOOST_AUTO_TEST_SUITE_END()
+
+BOOST_AUTO_TEST_SUITE(TestSuite_factory)
+
+BOOST_AUTO_TEST_CASE(test_create_circle) {
+    // Arrange
+    ShapeFactory factory;
+    // Act
+    auto shape = factory.createShape("Circle");
+    // Assert
+    BOOST_REQUIRE(shape != nullptr); // Проверяем, что объект не нулевой
+    BOOST_CHECK_EQUAL(shape->draw(), "Drawing a Circle"); // Проверяем, что метод draw() возвращает правильное значение
+    std::cout << "test5" << std::endl;
+}
+
+BOOST_AUTO_TEST_CASE(test_create_square) {
+    // Arrange
+    ShapeFactory factory;
+    // Act
+    auto shape = factory.createShape("Square");
+    // Assert
+    BOOST_REQUIRE(shape != nullptr); // Проверяем, что объект не нулевой
+    BOOST_CHECK_EQUAL(shape->draw(), "Drawing a Square"); // Проверяем, что метод draw() возвращает правильное значение
+    std::cout << "test6" << std::endl;
+}
+
+BOOST_AUTO_TEST_CASE(test_create_invalid_shape) {
+    // Arrange
+    ShapeFactory factory;
+    // Act
+    auto shape = factory.createShape("Triangle"); // Неверный тип
+    // Assert
+    BOOST_CHECK(shape == nullptr); // Проверяем, что объект равен нулю
+    std::cout << "test7" << std::endl;
 }
 
 BOOST_AUTO_TEST_SUITE_END()
