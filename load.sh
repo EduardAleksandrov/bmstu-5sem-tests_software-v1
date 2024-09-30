@@ -31,6 +31,7 @@ function all() {
     cmake ..
     cmake --build .
     ./1.test --random
+    # ./2.test --random
 }
 # --help=random
 #  ./1.test --random

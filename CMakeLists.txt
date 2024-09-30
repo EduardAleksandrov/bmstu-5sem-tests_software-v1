@@ -56,6 +56,7 @@ include_directories(include)
 # Add the main source files
 add_library(one src/1.integral.cpp)
 
-add_executable(1.test 1.test.cpp)
+add_executable(1.test 1.test.cpp )
+# add_executable(2.test 2.test.cpp )
 target_link_libraries(1.test boost::boost GTest::GTest GTest::Main one )
-# target_link_libraries(1.test boost::boost my_code) 
+# target_link_libraries(2.test boost::boost GTest::GTest GTest::Main one )
