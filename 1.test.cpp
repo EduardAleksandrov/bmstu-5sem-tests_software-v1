@@ -1,6 +1,11 @@
-// Assert error Что ошибка возникает(проверка на возврат ошибок)
-// Тест с погрешностью eps [-2, 3], [-2+eps, 3-eps]
-// как запустить и сколько потоков запускать
+/*
+    Комментарии преподавателя:
+        Assert error Что ошибка возникает(проверка на возврат ошибок) - готово
+        Тест с погрешностью eps [-2, 3], [-2+eps, 3-eps] - готово
+        как запустить и сколько потоков запускать - готово 2.test
+*/
+
+
 #define BOOST_TEST_MODULE MyTestModule
 #include <iostream>
 #include <gmock/gmock.h>
@@ -51,6 +56,22 @@ BOOST_AUTO_TEST_CASE(test_case_3_integral_false)
     std::cout << "test3" << std::endl;
 }
 
+BOOST_AUTO_TEST_CASE(test_case_2_1_integral_true)
+{
+    // Arrange
+    double f1, f2, f3;
+    double eps {0.01};
+
+    // Act
+    integral_three_cases(0.1, (-2+eps), (2-eps), f1, f2, f3);
+
+    // Assert
+    BOOST_TEST(f1 == 5.26, boost::test_tools::tolerance(1e-2)); // Left Riemann sum  // "(Метод левых прямоугольников): Площадь равна: "
+    BOOST_TEST(f2 == 5.26, boost::test_tools::tolerance(1e-2)); // "(Метод правых прямоугольников): Площадь равна: "
+    BOOST_TEST(f3 == 5.26, boost::test_tools::tolerance(1e-2)); // "(Метод трапеций): Площадь равна: "
+    std::cout << "test2.1" << std::endl;
+}
+
 class F_integral: public FunY_interface
 {
     double functionY(double x) override
@@ -78,6 +99,31 @@ BOOST_AUTO_TEST_CASE(test_case_4_integral_mock)
     BOOST_TEST(f2 == 2.67, boost::test_tools::tolerance(1e-2)); // "(Метод правых прямоугольников): Площадь равна: "
     BOOST_TEST(f3 == 2.67, boost::test_tools::tolerance(1e-2)); // "(Метод трапеций): Площадь равна: "
     std::cout << "test4" << std::endl;
+}
+
+class F_integral_except: public FunY_interface
+{
+    double functionY(double x) override
+    {
+        double y;
+        y = 0;
+        if(x)
+            return y = 1/x;
+        throw std::runtime_error("division by zero");;
+    }
+};
+
+BOOST_AUTO_TEST_CASE(test_case_4_1_exception)
+{
+    // Arrange
+    F_integral_except integral;
+    Integral_cases int_f{&integral, &FunY_interface::functionY};
+    double f1, f2, f3;
+
+    // Act // Assert
+    BOOST_CHECK_THROW(int_f.integral_three_cases(0.1, 0, 2, f1, f2, f3), std::runtime_error);
+
+    std::cout << "test4.1" << std::endl;
 }
 
 BOOST_AUTO_TEST_SUITE_END()
