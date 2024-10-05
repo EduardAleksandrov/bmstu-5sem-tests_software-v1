@@ -31,10 +31,11 @@ function all() {
     cmake ..
     cmake --build .
     ./1.test --random
-    # ./2.test --random
+    ./2.test -- -j4
 }
 # --help=random
 #  ./1.test --random
+# -j4  Используем 4 потока, смотри docx в папке предмета на ubuntu
 
 case "$1" in
     folder)

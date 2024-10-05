@@ -1,3 +1,6 @@
+// Assert error Что ошибка возникает(проверка на возврат ошибок)
+// Тест с погрешностью eps [-2, 3], [-2+eps, 3-eps]
+// как запустить и сколько потоков запускать
 #define BOOST_TEST_MODULE MyTestModule
 #include <iostream>
 #include <gmock/gmock.h>
